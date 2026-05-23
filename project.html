@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Computer Engineer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">// portfolio</a>
+  <div class="nav-links">
+    <a href="index.html">home</a>
+    <a href="about.html">about</a>
+    <a href="project.html">projects</a>
+    <a href="contact.html">contact</a>
+  </div>
+</nav>
+
+<!-- LIGHTBOX OVERLAY -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-prev" onclick="changeSlide(-1)">&#8592;</button>
+  <button class="lightbox-next" onclick="changeSlide(1)">&#8594;</button>
+  <div class="lightbox-images" id="lightboxImages"></div>
+  <div class="lightbox-dots" id="lightboxDots"></div>
+</div>
+
+<section id="projects">
+  <div class="wrapper">
+    <div class="section-label">02 &nbsp; Projects</div>
+    <div class="projects-grid">
+
+      <!-- PROJECT 1 -->
+      <div class="project-card">
+
+        <!-- LEFT: content -->
+        <div class="project-content">
+          <div class="project-header">
+            <div class="project-icon">🔥</div>
+            <div class="project-tags">
+              <span class="tag hi">Arduino Uno</span>
+              <span class="tag hi">MQ Sensors</span>
+              <span class="tag">Embedded C</span>
+              <span class="tag">IoT</span>
+              <span class="tag">Safety Systems</span>
+            </div>
+          </div>
+          <div class="project-title">Portable Gas &amp; Smoke Detection System</div>
+          <p class="project-desc">
+            A compact, battery-powered device that continuously monitors ambient air for hazardous gas and smoke concentrations. Built for use in confined or industrial spaces where real-time alerts are critical for safety.
+          </p>
+          <div class="project-features">
+            <div class="feature">Real-time gas concentration readings via MQ-series gas sensors</div>
+            <div class="feature">Threshold-based audible and visual alarm triggered on detection</div>
+            <div class="feature">Portable, self-contained form factor powered by Arduino Uno</div>
+            <div class="feature">Low-cost, deployable safety solution for industrial and home environments</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: single thumbnail that opens lightbox -->
+        <div class="project-gallery">
+          <img
+            src="assets/images/Gas1.jpg"
+            alt="Gas Detection System"
+            class="gallery-thumb"
+            onclick="openLightbox(['assets/images/Gas1.jpg','assets/images/Gas2.jpg','assets/images/Gas3.jpg'], 0)"
+          />
+          <div class="gallery-hint">click to view all photos</div>
+        </div>
+
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project-card">
+
+        <div class="project-content">
+          <div class="project-header">
+            <div class="project-icon">🤖</div>
+            <div class="project-tags">
+              <span class="tag hi">ROS</span>
+              <span class="tag hi">LiDAR</span>
+              <span class="tag hi">SLAM</span>
+              <span class="tag">Raspberry Pi</span>
+              <span class="tag">Arduino Uno</span>
+              <span class="tag">Robotics</span>
+            </div>
+          </div>
+          <div class="project-title">Autonomous Stair-Climbing Search &amp; Rescue Robot</div>
+          <p class="project-desc">
+            A ROS-based autonomous robot designed to navigate and climb stairs in disaster or rescue scenarios. Integrates LiDAR-based SLAM for real-time environment mapping and path planning without continuous human input.
+          </p>
+          <div class="project-features">
+            <div class="feature">ROS navigation stack with full autonomous obstacle avoidance</div>
+            <div class="feature">LiDAR-powered 2D environment mapping via SLAM algorithm</div>
+            <div class="feature">Dual-controller design: Arduino handles Sensors, Raspberry Pi runs ROS</div>
+            <div class="feature">Stair-climbing mechanism engineered for uneven terrain traversal</div>
+            <div class="feature">Designed for search &amp; rescue operations with minimal human input</div>
+          </div>
+          <div class="project-gallery">
+            <img
+              src="assets/images/Robot1.jpeg"
+              alt="Rescue Robot"
+              class="gallery-thumb"
+              onclick="openLightbox(['assets/images/Robot1.jpeg','assets/images/Robot2.png','assets/images/Robot3.png','assets/images/Robot4.jpg'], 0)"
+            />
+            <div class="gallery-hint">click to view all photos</div>
+          </div>
+        </div>
+
+        <!-- Add your robot images here the same way -->
+        <!-- <div class="project-gallery">
+          <img src="images/robot1.jpg" class="gallery-thumb"
+            onclick="openLightbox(['images/robot1.jpg','images/robot2.jpg','images/robot3.jpg'], 0)" />
+          <div class="gallery-hint">click to view all photos</div>
+        </div> -->
+
+      </div>
+
+    </div>
+
+    <br><br>
+    <div class="hero-btns">
+      <a href="index.html" class="btn btn-primary">Home Page</a>
+      <a href="about.html" class="btn btn-outline">More About Me</a>
+      <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function openLightbox(images, startIndex) {
+    currentImages = images;
+    currentIndex = startIndex;
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function changeSlide(dir) {
+    currentIndex = (currentIndex + dir + currentImages.length) % currentImages.length;
+    renderLightbox();
+  }
+
+  function renderLightbox() {
+    const container = document.getElementById('lightboxImages');
+    const dots = document.getElementById('lightboxDots');
+
+    container.innerHTML = currentImages.map((src, i) =>
+      `<img src="${src}" class="lightbox-img ${i === currentIndex ? 'active' : ''}" alt="Project photo ${i+1}" />`
+    ).join('');
+
+    dots.innerHTML = currentImages.map((_, i) =>
+      `<span class="dot ${i === currentIndex ? 'active' : ''}" onclick="currentIndex=${i};renderLightbox()"></span>`
+    ).join('');
+  }
+
+  // Close on backdrop click
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') changeSlide(1);
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+  });
+</script>
+
+</body>
+</html>
